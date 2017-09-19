@@ -1,7 +1,5 @@
 package com.training.mcg.usecases;
 
-import com.training.mcg.base.UseCase;
-
 /**
  * Created by An Nguyen on 9/17/2017.
  */
@@ -27,8 +25,25 @@ public class UseCaseHandler {
 		return INSTANCE;
 	}
 
+	/**
+	 * Execute.
+	 *
+	 * @param <RQV>        the type parameter
+	 * @param <RSV>        the type parameter
+	 * @param useCase      the use case
+	 * @param requestValue the request value
+	 * @param callback     the callback
+	 */
 	public <RQV extends RequestValue, RSV extends ResponseValue> void execute(
-			UseCase<RQV, RSV> useCase, RQV requestValue, UseCaseCallback<RSV> callback) {
+			final UseCase<RQV, RSV> useCase, RQV requestValue, UseCaseCallback<RSV> callback) {
+		useCase.setRequestValue(requestValue);
+		useCase.setUseCaseCallback(callback);
 
+		this.scheduler.execute(new Runnable() {
+			@Override
+			public void run() {
+				useCase.run();
+			}
+		});
 	}
 }

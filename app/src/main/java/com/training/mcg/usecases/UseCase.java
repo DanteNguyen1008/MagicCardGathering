@@ -1,8 +1,4 @@
-package com.training.mcg.base;
-
-import com.training.mcg.usecases.RequestValue;
-import com.training.mcg.usecases.ResponseValue;
-import com.training.mcg.usecases.UseCaseCallback;
+package com.training.mcg.usecases;
 
 /**
  * Created by An Nguyen on 9/17/2017.
@@ -35,7 +31,7 @@ public abstract class UseCase<RQV extends RequestValue, RSV extends ResponseValu
     /**
      * Run the use case
      */
-    void run() {
+    public void run() {
         this.executeUseCase(this.requestValue);
     }
 
