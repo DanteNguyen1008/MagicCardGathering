@@ -5,4 +5,7 @@ package com.training.mcg.models;
  */
 
 public class Card {
+	public String getId() {
+		return "";
+	}
 }

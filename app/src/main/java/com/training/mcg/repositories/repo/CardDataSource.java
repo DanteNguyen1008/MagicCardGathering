@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * Created by An Nguyen on 9/18/2017.
  */
-
 public interface CardDataSource {
 	/**
 	 * Gets cards.
@@ -19,11 +18,11 @@ public interface CardDataSource {
 	void getCards(@NonNull LoadCardsCallback callback);
 
 	/**
-	 * Gets card detail.
+	 * Save cards.
 	 *
-	 * @param callback the callback
+	 * @param cards the cards
 	 */
-	void getCardDetail(@NonNull LoadCardDetailCallback callback);
+	void saveCards(List<Card> cards);
 
 	/**
 	 * The interface Load cards callback.
@@ -35,23 +34,6 @@ public interface CardDataSource {
 		 * @param cards the cards
 		 */
 		void onCardsLoaded(List<Card> cards);
-
-		/**
-		 * On data not available.
-		 */
-		void onDataNotAvailable();
-	}
-
-	/**
-	 * The interface Load card detail callback.
-	 */
-	interface LoadCardDetailCallback {
-		/**
-		 * On card loaded.
-		 *
-		 * @param card the card
-		 */
-		void onCardLoaded(Card card);
 
 		/**
 		 * On data not available.
