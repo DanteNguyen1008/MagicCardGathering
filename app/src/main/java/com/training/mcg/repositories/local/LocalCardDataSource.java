@@ -75,4 +75,9 @@ public class LocalCardDataSource implements CardDataSource {
 			ex.printStackTrace();
 		}
 	}
+
+	@Override
+	public void refreshCards() {
+
+	}
 }

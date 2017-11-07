@@ -1,4 +1,4 @@
-package com.training.mcg.usecases;
+package com.training.mcg.domain;
 
 /**
  * Created by An Nguyen on 9/17/2017.
@@ -27,6 +27,15 @@ public abstract class UseCase<RQV extends RequestValue, RSV extends ResponseValu
     public void setUseCaseCallback(UseCaseCallback<RSV> useCaseCallback) {
         this.useCaseCallback = useCaseCallback;
     }
+
+	/**
+	 * Gets use case call back.
+	 *
+	 * @return the use case call back
+	 */
+	public UseCaseCallback<RSV> getUseCaseCallBack() {
+		return this.useCaseCallback;
+	}
 
     /**
      * Run the use case

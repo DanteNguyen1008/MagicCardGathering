@@ -25,6 +25,11 @@ public interface CardDataSource {
 	void saveCards(List<Card> cards);
 
 	/**
+	 * Refresh cards.
+	 */
+	void refreshCards();
+
+	/**
 	 * The interface Load cards callback.
 	 */
 	interface LoadCardsCallback {

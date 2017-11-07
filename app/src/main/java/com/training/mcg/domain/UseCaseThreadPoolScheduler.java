@@ -1,4 +1,4 @@
-package com.training.mcg.usecases;
+package com.training.mcg.domain;
 
 import android.os.Handler;
 

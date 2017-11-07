@@ -104,6 +104,11 @@ public class CardRepository implements CardDataSource {
 		// No support save card for or from UseCase
 	}
 
+	@Override
+	public void refreshCards() {
+		this.cacheIsDirty = true;
+	}
+
 	/**
 	 * Refresh cards cache.
 	 *
