@@ -6,7 +6,6 @@ import com.training.mcg.contracts.ListCardContract;
 import com.training.mcg.domain.Error;
 import com.training.mcg.domain.UseCaseCallback;
 import com.training.mcg.domain.UseCaseHandler;
-import com.training.mcg.domain.filters.FilterType;
 import com.training.mcg.domain.usecase.GetCard;
 import com.training.mcg.models.Card;
 import com.training.mcg.views.ListCardViewFragment;
@@ -22,7 +21,6 @@ public class ListCardController implements ListCardContract.Controller {
 	private final UseCaseHandler useCaseHandler;
 	private ListCardViewFragment view;
 	private boolean mFirstLoad = true;
-	private FilterType currentCardFilterType = FilterType.ALL_CARD;
 
 	/**
 	 * Instantiates a new List card controller.
@@ -65,9 +63,7 @@ public class ListCardController implements ListCardContract.Controller {
 			this.view.showLoadingUI();
 		}
 
-		GetCard.RequestValue requestValue = new GetCard.RequestValue(forceUpdate, this
-				.currentCardFilterType);
-
+		GetCard.RequestValue requestValue = new GetCard.RequestValue(forceUpdate);
 		this.useCaseHandler.execute(this.getCardUseCase, requestValue,
 				new UseCaseCallback<GetCard.ResponseValue>() {
 					@Override
@@ -86,6 +82,10 @@ public class ListCardController implements ListCardContract.Controller {
 
 					@Override
 					public void onError(Error error) {
+						if (isShowLoadingUI) {
+							view.hideLoadingUI();
+						}
+
 						view.displayError(error.errorMessage);
 					}
 				});

@@ -17,7 +17,7 @@ import com.training.mcg.views.ListCardViewFragment;
  */
 public class MainActivity extends AppCompatActivity {
 
-	private static final String URL = "";
+	private static final String URL = "https://api.magicthegathering.io/v1/";
 
 	private ListCardController listCardController;
 
@@ -39,8 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
 		this.listCardController = new ListCardController(listCardView,
 				UseCaseHandler.getInstance(),
-				new GetCard(CardRepository.GetInstance(new RemoteCardDataSource(URL),
-						LocalCardDataSource.getInstance(
-								((Application) this.getApplication()).getBoxStore()))));
+				new GetCard(CardRepository.GetInstance(new RemoteCardDataSource(),
+						LocalCardDataSource.getInstance(this.getApplicationContext()))));
 	}
 }

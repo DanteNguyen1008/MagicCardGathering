@@ -1,46 +1,41 @@
 package com.training.mcg.repositories.local;
 
+import android.arch.persistence.room.Room;
+import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.training.mcg.models.AppDatabase;
 import com.training.mcg.models.Card;
-import com.training.mcg.models.Card_;
 import com.training.mcg.repositories.repo.CardDataSource;
 
 import java.util.List;
-
-import io.objectbox.Box;
-import io.objectbox.BoxStore;
-import io.objectbox.query.Query;
 
 /**
  * Created by An Nguyen on 9/22/2017.
  */
 public class LocalCardDataSource implements CardDataSource {
-
+	private static final String DATABASE_NAME = "cards_db";
 	private static LocalCardDataSource INSTANCE = null;
-	private BoxStore boxStore;
-	private Box<Card> boxCard;
+	private AppDatabase database;
 
 	/**
 	 * Instantiates a new Local card data source.
-	 *
-	 * @param boxStore the box store
 	 */
-	private LocalCardDataSource(BoxStore boxStore) {
-		this.boxStore = boxStore;
-		this.boxCard = this.boxStore.boxFor(Card.class);
+	private LocalCardDataSource(Context applicationContext) {
+		this.database = Room.databaseBuilder(applicationContext, AppDatabase.class,
+				DATABASE_NAME).build();
 	}
 
 	/**
 	 * Gets instance.
 	 *
-	 * @param boxStore the box store
+	 * @param applicationContext the application context
 	 *
 	 * @return the instance
 	 */
-	public static LocalCardDataSource getInstance(BoxStore boxStore) {
+	public static LocalCardDataSource getInstance(Context applicationContext) {
 		if (INSTANCE == null) {
-			INSTANCE = new LocalCardDataSource(boxStore);
+			INSTANCE = new LocalCardDataSource(applicationContext);
 		}
 
 		return INSTANCE;
@@ -56,9 +51,7 @@ public class LocalCardDataSource implements CardDataSource {
 	@Override
 	public void getCards(@NonNull LoadCardsCallback callback) {
 		try {
-			Query<Card> queryAllCard = this.boxCard.query().order(Card_.id).build();
-			List<Card> cards = queryAllCard.find();
-			callback.onCardsLoaded(cards);
+			callback.onCardsLoaded(this.database.cardDao().getAll());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			callback.onDataNotAvailable();
@@ -69,8 +62,8 @@ public class LocalCardDataSource implements CardDataSource {
 	public void saveCards(List<Card> cards) {
 		try {
 			// TODO first version: clear then add
-			this.boxCard.removeAll();
-			this.boxCard.put(cards);
+			this.database.cardDao().deleteAll(cards);
+			this.database.cardDao().insertAll(cards);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

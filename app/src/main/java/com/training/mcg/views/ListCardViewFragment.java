@@ -49,8 +49,6 @@ public class ListCardViewFragment extends Fragment implements ListCardContract.V
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.cardInListAdapter = new CardInListAdapter(this.getActivity(), new ArrayList<Card>(0));
-		this.rlListCard.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-		this.rlListCard.setAdapter(this.cardInListAdapter);
 	}
 
 	@Nullable
@@ -59,6 +57,9 @@ public class ListCardViewFragment extends Fragment implements ListCardContract.V
 	                         Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.list_card_view_fragment, container, false);
 		this.unbinder = ButterKnife.bind(this, view);
+
+		this.rlListCard.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+		this.rlListCard.setAdapter(this.cardInListAdapter);
 		return view;
 	}
 
